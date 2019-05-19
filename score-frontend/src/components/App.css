@@ -1,0 +1,81 @@
+body{
+  font-family: 'PT Serif Caption', serif;
+  background: #f1f0f0
+}
+
+.headerWrap{
+  background: #007bff;
+}
+
+.contentWrap{
+  margin-top: 50px;
+}
+
+.header{
+  color: #ffffff;
+  font-family: 'Russo One', sans-serif;
+  font-size: 24px;
+}
+
+.header a{
+  color: #ffffff;
+}
+
+.menuItem{
+  margin-right: 20px;
+}
+
+.block{
+  background: #ffffff; 
+  box-shadow: 0 2px 5px rgba(0,0,0,0.10), 0 2px 2px rgba(0,0,0,0.10);
+  border-radius: 7px;
+  padding: 10px;
+  margin-bottom: 100px;
+}
+
+.creditForm{
+  width: 1200px;
+  height: 700px;
+}
+
+.label{
+  font-size: 25px;
+}
+
+.answerBlock{
+  height: 200px;
+}
+
+.answerBlocText{
+  float: left;
+  font-size: 25px;
+}
+
+.creditDecisionYes{
+  float: left;
+  font-size: 25px;
+  color: #28a745;
+}
+
+.creditDecisionNo{
+  float: left;
+  font-size: 25px;
+  color: #dc3545;
+}
+
+.creditDecisionNoAnswer{
+  float: left;
+  font-size: 25px;
+  color: #007bff;
+}
+
+.blocAnketa{
+  float: left;
+  width: 1200px;
+  margin-top: 25px;
+}
+
+.itemAnketa{
+  float: left;
+  margin-right: 20px;
+}
