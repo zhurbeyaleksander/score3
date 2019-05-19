@@ -152,7 +152,7 @@ export class Credit extends Component{
 
       creditDecision = (des) => {
         if(des === 1){
-          return <div className='creditDecisionYes'>Положительное решение</div>
+          return <div className='creditDecisionYes'>Положительное решение!</div>
         } else if(des === 0){
           return <div className='creditDecisionNo'>Отрицательное решение</div>
         } else {
