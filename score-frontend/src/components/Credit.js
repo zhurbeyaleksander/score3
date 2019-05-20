@@ -91,7 +91,9 @@ export class Credit extends Component{
         .then((response) => {
           console.log('+++')
           console.log(response);
-          this.props.sendCreditReq(true, response.data.creditDecision, response.data.defaultPeriods)
+          console.log(Math.round(response.data.creditDecision))
+          const decision = Math.round(response.data.creditDecision) > 0.7 ? 1 : 0;
+          this.props.sendCreditReq(true, decision, response.data.defaultPeriods)
         })
 
       }
@@ -143,8 +145,7 @@ export class Credit extends Component{
         if(isRequest){
           return <div className='answerBlock'>
           <div className='answerBlocText'> Результат кредитного решения </div>
-         
-         {this.creditDecision(this.props.credReq.creditDecision)}
+          <div className='answerBlocText'> {this.creditDecision(this.props.credReq.creditDecision)}</div>
              <br/><br/><br/><br/>
              <button className='btn btn-primary label' onClick={this.handleApprove}>Одобрить</button> 	&nbsp;	&nbsp;
             <button className='btn btn-primary label' onClick={this.handleReject}>Отклонить</button>
@@ -167,7 +168,8 @@ export class Credit extends Component{
       render() {
         const {isRequest} = this.props.credReq;
         console.log(this.state)
-      
+        
+        if (!isRequest) {
         return (
           <div className='block creditForm'>
          <form onSubmit={this.handleSubmit}>
@@ -344,11 +346,15 @@ export class Credit extends Component{
             <input type="submit" className='btn btn-primary label'  onSubmit={this.handleSubmit} value="Отправить" />
           
           </form>
-    
-      
-        {this.renderAnswerBlock(isRequest)}
           </div>
         );
+        } else {
+          return(
+            <div className='block desBlock'>
+               {this.renderAnswerBlock(isRequest)}
+            </div>
+          );
+        }
       }
 }
 
