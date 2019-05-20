@@ -18,6 +18,7 @@ export class Credit extends Component{
           selfEmp: 0,
           creditHistory: 0,
           area: 0,
+          loanTerm: 0.
         };
     
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -53,6 +54,8 @@ export class Credit extends Component{
            break
            case 'area': this.setState({area: +event.target.value})
            break
+           case 'loanTerm': this.setState({loanTerm: +event.target.value})
+           break
            default: console.log('Ничего не поменялось.')
         }
       }
@@ -74,6 +77,7 @@ export class Credit extends Component{
           selfEmp: this.state.selfEmp,
           creditHistory: this.state.creditHistory,
           area: this.state.area,
+          loanTerm: this.state.loanTerm,
         })
         .then(function (response) {
           console.log('---')
@@ -255,8 +259,8 @@ export class Credit extends Component{
              Семейное положение <br/>
              <select class="custom-select" value={this.state.married} name="married" onChange={this.handleInputChange}>
     <option value="0" selected>Не указано</option>
-    <option value="1">Холост/Не замужем</option>
-    <option  value="2">Женат/Замужем</option>
+    <option value="0">Холост/Не замужем</option>
+    <option  value="1">Женат/Замужем</option>
   </select>
             </label>
             </div>
@@ -323,10 +327,20 @@ export class Credit extends Component{
             </label>
             </div>
             </div>
-            
-            
-           
-           <br/><br/>
+            <div className='blocAnketa'>
+         <div className='itemAnketa'>
+         <label className='label'>
+             Срок кредита в мес. <br/>
+              <input className='inputMy'
+                 name="loanTerm"
+                 type="number"
+                 value={this.state.loanTerm}
+                 onChange={this.handleInputChange} 
+                 />
+            </label >
+            </div>
+            </div>
+           <br/><br/><br/>
             <input type="submit" className='btn btn-primary label'  onSubmit={this.handleSubmit} value="Отправить" />
           
           </form>
