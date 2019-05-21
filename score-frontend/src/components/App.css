@@ -38,17 +38,25 @@ body{
   height: 800px;
 }
 
+.desBlock{
+  padding: 20px;
+  height: 200px;
+}
+
 .label{
   font-size: 25px;
 }
 
 .answerBlock{
+  float: left;
   height: 200px;
+  margin-right: 20px;
 }
 
 .answerBlocText{
   float: left;
   font-size: 25px;
+  margin-right: 20px;
 }
 
 .creditDecisionYes{

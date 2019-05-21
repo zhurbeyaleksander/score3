@@ -8,6 +8,9 @@ var brain = require('brain.js');
 app.use(bodyParser.json());
 app.use(cors());
 
+///Global Var
+let isNetTrain = 0;
+///Global Var
 
 //const db = mysql.createConnection({
   //  host: '209.97.184.60',
@@ -1732,9 +1735,10 @@ function makeDecisionSecondVer(borrowerData){
   }
 
   const answer = net3.run(inputDate);
-  console.log('++++++++++++++++')
-  console.log(answer)
-  console.log('++++++++++++++')
+  console.log('++++++++++++++++');
+  console.log(answer);
+  console.log('++++++++++++++');
+  return answer;
 }
 
 
@@ -1766,14 +1770,15 @@ app.post('/net', function(req, res){
     console.log(req.body); 
     
     //var output = makeDecision(req.body);
-    var output = makeDecisionSecondVer(req.body)
+    var output = makeDecisionSecondVer(req.body);
+    console.log(output)
 
 
-    des.push(output.result);
-    defaultPeriods = output.defaultPeriods;
+    des.push(output);
+    //defaultPeriods = output.defaultPeriods;
 
     res.send({
-		output: output,
+		output: 1,
     });
 
 });
@@ -1864,4 +1869,8 @@ app.get('/getDefPeriods', function(req,res){
                 });
              });
            
+        });
+
+    app.get('/getNetParams', function(req,res){
+        res.send('isNetTrain')
         });

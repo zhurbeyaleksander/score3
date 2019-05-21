@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import {Header} from '../conteiners/Header';
 import {Credit} from '../components/Credit'
 import {Analisis} from '../components/Analisis'
+import {AnalisisNet} from '../components/AnalisNet'
 import {Settings} from '../components/Settings'
 import { connect } from 'react-redux'
 import {sendCreditReq} from '../actions/CreditReqAction'
@@ -30,10 +31,8 @@ class App extends Component {
         component={() => <Credit credReq={credReq} 
         sendCreditReq={sendCreditReq} chengeCreditParams={chengeCreditParams}
         changeCreditDecision={changeCreditDecision} />} />
-         <Route path="/analisis/" 
-        component={() => <Analisis credReq={credReq} 
-        sendCreditReq={sendCreditReq} chengeCreditParams={chengeCreditParams}
-        changeCreditDecision={changeCreditDecision} analis={analis} sendAnalisRequest={sendAnalisRequest} />} />
+         <Route path="/analisisNet/" 
+        component={() => <AnalisisNet />} />
           <Route path="/settings/" 
         component={() => <Settings settings={settings} chengeSettings={chengeSettings} />} />
         </div>

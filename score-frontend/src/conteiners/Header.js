@@ -9,7 +9,7 @@ export class Header extends Component {
             <div className='container header'>
                <Link to='/' className="menuItem">Главная</Link>
                <Link to='/credit/' className="menuItem">Подать заявку</Link> 
-               <Link to='/analisis/' className="menuItem">Анализ</Link>
+               <Link to='/analisisNet/' className="menuItem">Анализ нейронной сети</Link>
                <Link to='/settings/' className="menuItem">Настройки</Link>  
                </div>
             </div>
