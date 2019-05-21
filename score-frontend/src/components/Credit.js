@@ -18,7 +18,9 @@ export class Credit extends Component{
           selfEmp: 0,
           creditHistory: 0,
           area: 0,
-          loanTerm: 0.
+          loanTerm: 0,
+          decision: 0,
+          isRequest: 0,
         };
     
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -91,17 +93,22 @@ export class Credit extends Component{
         .then((response) => {
           console.log('+++')
           console.log(response);
-          console.log(Math.round(response.data.creditDecision))
-          const decision = Math.round(response.data.creditDecision) > 0.7 ? 1 : 0;
-          this.props.sendCreditReq(true, decision, response.data.defaultPeriods)
+          console.log(+response.data.creditDecision.result)
+          const decision = response.data.creditDecision.result > 0.7 ? 1 : 0;
+          this.setState({
+            isRequest: 1,
+            decision: decision,
+          });
         })
 
       }
 
       handleReject()
       {
-        this.props.sendCreditReq(false, 0, [])
-        this.props.chengeCreditParams(0,0,0)
+        this.setState({
+          isRequest: 0,
+          decision: 0,
+        });
       }
 
       handleApprove(event){
@@ -145,7 +152,7 @@ export class Credit extends Component{
         if(isRequest){
           return <div className='answerBlock'>
           <div className='answerBlocText'> Результат кредитного решения </div>
-          <div className='answerBlocText'> {this.creditDecision(this.props.credReq.creditDecision)}</div>
+          <div className='answerBlocText'> {this.creditDecision(this.state.decision)}</div>
              <br/><br/><br/><br/>
              <button className='btn btn-primary label' onClick={this.handleApprove}>Одобрить</button> 	&nbsp;	&nbsp;
             <button className='btn btn-primary label' onClick={this.handleReject}>Отклонить</button>
@@ -157,7 +164,7 @@ export class Credit extends Component{
 
       creditDecision = (des) => {
         if(des === 1){
-          return <div className='creditDecisionYes'>Положительное решение!</div>
+          return <div className='creditDecisionYes'>Положительное решение</div>
         } else if(des === 0){
           return <div className='creditDecisionNo'>Отрицательное решение</div>
         } else {
@@ -166,10 +173,9 @@ export class Credit extends Component{
       }
     
       render() {
-        const {isRequest} = this.props.credReq;
         console.log(this.state)
         
-        if (!isRequest) {
+        if (this.state.isRequest === 0) {
         return (
           <div className='block creditForm'>
          <form onSubmit={this.handleSubmit}>
@@ -351,7 +357,7 @@ export class Credit extends Component{
         } else {
           return(
             <div className='block desBlock'>
-               {this.renderAnswerBlock(isRequest)}
+               {this.renderAnswerBlock(this.state.isRequest)}
             </div>
           );
         }

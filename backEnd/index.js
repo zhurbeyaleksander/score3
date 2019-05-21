@@ -10,6 +10,8 @@ app.use(cors());
 
 ///Global Var
 var ISNETTRAIN = 0;
+var DATASETCOUNT = 0;
+var PREPARETOTRAIN =0;
 ///Global Var
 
 //const db = mysql.createConnection({
@@ -1594,6 +1596,7 @@ const net2 = new brain.NeuralNetwork(config);
         console.log('DataSet подготовлен');
         console.log(netDataSet.length);
         console.log(netDataSet[3]);
+        DATASETCOUNT = netDataSet.length;
     }
 
     //console.log(netDataSet)
@@ -1874,10 +1877,13 @@ app.get('/getDefPeriods', function(req,res){
         });
 
     app.get('/getNetParams', function(req,res){
-        res.send({isNetTrain: ISNETTRAIN})
+        res.send({
+          isNetTrain: ISNETTRAIN,
+          dataSet: DATASETCOUNT,
+        })
         });
 
     app.get('/trainNet', function(req,res){
         trainNet();
-        res.send({isNetTrain: ISNETTRAIN})
+        res.send({isNetTrain: ISNETTRAIN});
         });

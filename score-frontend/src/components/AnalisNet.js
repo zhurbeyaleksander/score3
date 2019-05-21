@@ -7,7 +7,8 @@ export class AnalisisNet extends Component{
       
         this.state = {
             isNetTrain: 0,
-            netTraining: 0, 
+            netTraining: 0,
+            setCount: 0, 
         }
       }
 
@@ -17,7 +18,10 @@ export class AnalisisNet extends Component{
           axios.get(url)
           .then((response) => {
               console.log('Статус сети' + response.data.isNetTrain);
-              this.setState({isNetTrain: response.data.isNetTrain});
+              this.setState({
+                isNetTrain: response.data.isNetTrain,
+                setCount: response.data.dataSet,
+              });
           })
       }
 
@@ -73,6 +77,11 @@ export class AnalisisNet extends Component{
       <th scope="row">Статус сети</th>
       <td>{this.renderNetStatus(this.state.isNetTrain)}</td>
       <td><button type="button" class="btn btn-primary btn-sm" onClick={this.trainNet}>Обучить сеть</button></td>
+    </tr>
+    <tr>
+      <th scope="row">Объем сета для обучения</th>
+      <td>{this.state.setCount}</td>
+      <td></td>
     </tr>
   </tbody>
 </table>
