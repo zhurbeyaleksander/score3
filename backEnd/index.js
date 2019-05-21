@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 ///Global Var
-let isNetTrain = 0;
+var ISNETTRAIN = 0;
 ///Global Var
 
 //const db = mysql.createConnection({
@@ -1604,10 +1604,11 @@ const net2 = new brain.NeuralNetwork(config);
 
     const net3 = new brain.NeuralNetwork();
 
- 
+     function trainNet(){
       if (netDataSet.length > 0) {
         net3.train(netDataSet);
-        console.log('Сеть обучена');  
+        console.log('Сеть обучена');
+        ISNETTRAIN = 1;  
         } else {
           console.log('Сеть не обучена ')
         }
@@ -1627,6 +1628,7 @@ const net2 = new brain.NeuralNetwork(config);
          Loan_Amount_Term: 360, 
          Credit_History: 1, 
          Property_Area: 0 }))}, 15000)
+    }
 
 console.log('Приложение запущено')
 
@@ -1872,5 +1874,10 @@ app.get('/getDefPeriods', function(req,res){
         });
 
     app.get('/getNetParams', function(req,res){
-        res.send('isNetTrain')
+        res.send({isNetTrain: ISNETTRAIN})
+        });
+
+    app.get('/trainNet', function(req,res){
+        trainNet();
+        res.send({isNetTrain: ISNETTRAIN})
         });
