@@ -9,6 +9,8 @@ export class AnalisisNet extends Component{
             isNetTrain: 0,
             netTraining: 0,
             setCount: 0, 
+            creditPoll: 0,
+            dateTrain: Date(),
         }
       }
 
@@ -17,10 +19,11 @@ export class AnalisisNet extends Component{
 
           axios.get(url)
           .then((response) => {
-              console.log('Статус сети' + response.data.isNetTrain);
+              console.log('Статус сети ' + response.data.isNetTrain);
               this.setState({
                 isNetTrain: response.data.isNetTrain,
                 setCount: response.data.dataSet,
+                creditPoll: response.data.creditPoll,
               });
           })
       }
@@ -43,10 +46,27 @@ export class AnalisisNet extends Component{
           }
       }
 
+      renderNetReTrainStatus = (isNetTrainStatus) => {
+        if(isNetTrainStatus === 1 && this.state.netTraining === 0){
+          return <div>{this.state.creditPoll} <br/> Последнее обучение {this.state.dateTrain}</div>
+        } else if (isNetTrainStatus === 0 && this.state.netTraining === 1){
+          return (
+            <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+            </div>
+          );
+        } else {
+          return (<div>Сеть не обучена</div>)
+        }
+      }
+
       trainNet = () => {
         let url = 'http://localhost:3210/trainNet';
 
-        this.setState({netTraining: 1});
+        this.setState({
+          isNetTrain: 0,
+          netTraining: 1
+        });
 
         axios.get(url)
         .then((response) => {
@@ -82,6 +102,11 @@ export class AnalisisNet extends Component{
       <th scope="row">Объем сета для обучения</th>
       <td>{this.state.setCount}</td>
       <td></td>
+    </tr>
+    <tr>
+      <th scope="row">Количество кредитов для обучения</th>
+      <td>{this.renderNetReTrainStatus(this.state.isNetTrain)}</td>
+      <td><button type="button" class="btn btn-primary btn-sm" onClick={this.trainNet}>Переобучить сеть</button></td>
     </tr>
   </tbody>
 </table>

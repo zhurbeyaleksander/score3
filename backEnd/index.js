@@ -13,6 +13,7 @@ var ISNETTRAIN = 0;
 var DATASETCOUNT = 0;
 var PREPARETOTRAIN =0;
 ///Global Var
+var creditPoll = [];
 
 //const db = mysql.createConnection({
   //  host: '209.97.184.60',
@@ -1880,6 +1881,7 @@ app.get('/getDefPeriods', function(req,res){
         res.send({
           isNetTrain: ISNETTRAIN,
           dataSet: DATASETCOUNT,
+          creditPoll: creditPoll.length,
         })
         });
 
@@ -1887,3 +1889,30 @@ app.get('/getDefPeriods', function(req,res){
         trainNet();
         res.send({isNetTrain: ISNETTRAIN});
         });
+
+    app.post('/add_to_credit_poll', function(req, res){
+              
+      console.log(req.body)
+            
+      netDataSet.push({input: 
+        { 
+          Gender: req.body.sex, 
+          Married: req.body.married,
+          Dependents: req.body.dependents,
+          Education: req.body.edu,
+          Self_Employed: req.body.selfEmp, 
+          ApplicantIncome: req.body.income,
+          CoapplicantIncome: req.body.coIncome,
+          LoanAmount: req.body.creditAmount,
+          Loan_Amount_Term: req.body.loanTerm, 
+          Credit_History: req.body.creditHistory, 
+          Property_Area: req.body.area }, 
+          output: {result: req.body.decision} 
+        });
+        
+        DATASETCOUNT = netDataSet.length;
+              res.send({
+                  status: 'Запись добавлена',
+              });
+         
+            });    

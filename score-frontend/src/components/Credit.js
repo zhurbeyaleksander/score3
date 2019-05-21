@@ -21,6 +21,7 @@ export class Credit extends Component{
           loanTerm: 0,
           decision: 0,
           isRequest: 0,
+          waitAnswer: 0,
         };
     
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -89,17 +90,27 @@ export class Credit extends Component{
           console.log(error);
         });
 
-        axios.get('http://localhost:3210/net')
-        .then((response) => {
-          console.log('+++')
-          console.log(response);
-          console.log(+response.data.creditDecision.result)
-          const decision = response.data.creditDecision.result > 0.7 ? 1 : 0;
-          this.setState({
-            isRequest: 1,
-            decision: decision,
-          });
+        this.setState({
+          waitAnswer: 1,
+          isRequest: 1,
         })
+        
+         setTimeout(() => {
+          axios.get('http://localhost:3210/net')
+          .then((response) => {
+            console.log('+++')
+            console.log(response);
+            console.log(+response.data.creditDecision.result)
+            const decision = response.data.creditDecision.result > 0.7 ? 1 : 0;
+            this.setState({
+              isRequest: 1,
+              decision: decision,
+              waitAnswer: 0,
+            });
+          })
+         }, 5000)
+        
+       
 
       }
 
@@ -115,16 +126,22 @@ export class Credit extends Component{
          
         event.preventDefault();
 
-        var url = 'http://localhost:3210/add_to_loans_list';
-        var urlAddFlag = 'http://localhost:3210/add_to_risk_flag_list'
+        var url = 'http://localhost:3210/add_to_credit_poll';
    
         axios.post(url, {
-          age: this.props.credReq.age,
-          salary: this.props.credReq.salary,
-          pe: this.props.credReq.pe,
-          net_decision: this.props.credReq.creditDecision,
-          decision: 1,
-          defaultPeriods: this.props.credReq.defaultPeriods,
+          age: this.state.age,
+          sex: this.state.sex,
+          married: this.state.married,
+          creditAmount: this.state.creditAmount,
+          income: this.state.income,
+          coIncome: this.state.coIncome,
+          dependents: this.state.dependents,
+          edu: this.state.edu,
+          selfEmp: this.state.selfEmp,
+          creditHistory: this.state.creditHistory,
+          area: this.state.area,
+          loanTerm: this.state.loanTerm,
+          decision: this.state.decision,
         })
         .then(function (response) {
           console.log(response);
@@ -134,17 +151,6 @@ export class Credit extends Component{
           console.log(error);
         });
 
-        axios.post(urlAddFlag, {
-          defaultPeriods: this.props.credReq.defaultPeriods,
-        })
-        .then(function (response) {
-          console.log(response);
-        
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-        
       }
 
 
@@ -163,6 +169,13 @@ export class Credit extends Component{
       }
 
       creditDecision = (des) => {
+        if (this.state.waitAnswer === 1) {
+          return(
+            <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+            </div>
+          );
+        } else {
         if(des === 1){
           return <div className='creditDecisionYes'>Положительное решение</div>
         } else if(des === 0){
@@ -170,6 +183,7 @@ export class Credit extends Component{
         } else {
           return <div className='creditDecisionNoAnswer'>Нет решения.</div>
         }
+      }
       }
     
       render() {
