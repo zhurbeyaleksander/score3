@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
 import axios from 'axios'
+import Moment from 'react-moment'
 
 export class AnalisisNet extends Component{
     constructor(props) {
@@ -47,8 +48,9 @@ export class AnalisisNet extends Component{
       }
 
       renderNetReTrainStatus = (isNetTrainStatus) => {
+        const {dateTrain} = this.state;
         if(isNetTrainStatus === 1 && this.state.netTraining === 0){
-          return <div>{this.state.creditPoll} <br/> Последнее обучение {this.state.dateTrain}</div>
+          return <div>{this.state.creditPoll} <br/> Последнее обучение <Moment format='DD.MM.YY | HH:mm:ss'>{dateTrain}</Moment></div>
         } else if (isNetTrainStatus === 0 && this.state.netTraining === 1){
           return (
             <div class="spinner-grow text-primary" role="status">
@@ -74,6 +76,7 @@ export class AnalisisNet extends Component{
             this.setState({
               isNetTrain: response.data.isNetTrain,
               netTraining: 0,
+              dateTrain: Date(),
             });
         })
     }
