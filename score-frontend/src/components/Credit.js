@@ -22,6 +22,7 @@ export class Credit extends Component{
           decision: 0,
           isRequest: 0,
           waitAnswer: 0,
+          isAddCredit: 0,
         };
     
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -151,6 +152,7 @@ export class Credit extends Component{
           console.log(error);
         });
 
+        this.setState({ isAddCredit: 1 });
       }
 
 
@@ -368,12 +370,18 @@ export class Credit extends Component{
           </form>
           </div>
         );
-        } else {
+        } else if (this.state.isRequest === 1 && this.state.isAddCredit === 0) {
           return(
             <div className='block desBlock'>
                {this.renderAnswerBlock(this.state.isRequest)}
             </div>
           );
+        } else if (this.state.isRequest === 1 && this.state.isAddCredit === 1) {
+          return (
+          <div className='block desBlock'>
+            Кредит добавлен в портфель
+          </div>
+          )
         }
       }
 }

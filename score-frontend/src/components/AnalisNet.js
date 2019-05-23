@@ -50,7 +50,7 @@ export class AnalisisNet extends Component{
       renderNetReTrainStatus = (isNetTrainStatus) => {
         const {dateTrain} = this.state;
         if(isNetTrainStatus === 1 && this.state.netTraining === 0){
-          return <div>{this.state.creditPoll} <br/> Последнее обучение <Moment format='DD.MM.YY | HH:mm:ss'>{dateTrain}</Moment></div>
+          return <div>{this.state.creditPoll} <br/> Последнее обучение <br/> <Moment format='DD.MM.YY | HH:mm:ss'>{dateTrain}</Moment></div>
         } else if (isNetTrainStatus === 0 && this.state.netTraining === 1){
           return (
             <div class="spinner-grow text-primary" role="status">
